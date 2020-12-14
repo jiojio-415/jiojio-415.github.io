@@ -8,7 +8,7 @@
 
 ### Git代码状态
 
-![代码状态转换图](/home/wuqiushi/.config/Typora/typora-user-images/image-20201209221438732.png)
+
 
 ### Git基本操作
 
