@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jiojio-415.github.io","root":"/","images":"/images","scheme":"Muse","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
+  </script>
+<meta name="description" content="Python学习2动态类型python是强类型的动态类型语言 动态类型核心：引用和对象分离 参考链接1 参考链接2 参考链接3 Python是动态类型，即在编程中允许随意改变变量的类型，我们把这个过程称为『绑定（Binding）』\ 『绑定』只存在于动态类型语言中；对于静态语言如C，存在『强制类型转换』\ 深拷贝和浅拷贝 深拷贝指的是复制内容，单独开辟一个内存地址。 浅拷贝指的是两个变量同时指向一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python学习笔记2">
+<meta property="og:url" content="https://jiojio-415.github.io/2020/12/21/python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02/index.html">
+<meta property="og:site_name" content="jiojio-415">
+<meta property="og:description" content="Python学习2动态类型python是强类型的动态类型语言 动态类型核心：引用和对象分离 参考链接1 参考链接2 参考链接3 Python是动态类型，即在编程中允许随意改变变量的类型，我们把这个过程称为『绑定（Binding）』\ 『绑定』只存在于动态类型语言中；对于静态语言如C，存在『强制类型转换』\ 深拷贝和浅拷贝 深拷贝指的是复制内容，单独开辟一个内存地址。 浅拷贝指的是两个变量同时指向一">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-12-21T06:22:51.000Z">
+<meta property="article:modified_time" content="2020-12-21T06:23:31.059Z">
+<meta property="article:author" content="Wu Qiushi">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://jiojio-415.github.io/2020/12/21/python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>python学习笔记2 | jiojio-415</title>
+  
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">jiojio-415</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Python%E5%AD%A6%E4%B9%A02"><span class="nav-number">1.</span> <span class="nav-text">Python学习2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.1.</span> <span class="nav-text">动态类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%B1%E6%8B%B7%E8%B4%9D%E5%92%8C%E6%B5%85%E6%8B%B7%E8%B4%9D"><span class="nav-number">1.2.</span> <span class="nav-text">深拷贝和浅拷贝</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%A0%E5%BC%95%E7%94%A8"><span class="nav-number">1.3.</span> <span class="nav-text">传引用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E7%9A%84%E5%B0%81%E8%A3%85"><span class="nav-number">1.4.</span> <span class="nav-text">类的封装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A5%E6%9C%9F%E5%92%8C%E6%97%B6%E9%97%B4"><span class="nav-number">1.5.</span> <span class="nav-text">日期和时间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-number">1.6.</span> <span class="nav-text">字符串</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#f-string"><span class="nav-number">1.6.1.</span> <span class="nav-text">f-string</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0"><span class="nav-number">1.7.</span> <span class="nav-text">函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E4%BC%A0%E9%80%92"><span class="nav-number">1.7.1.</span> <span class="nav-text">参数传递</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E6%95%B0%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.7.2.</span> <span class="nav-text">参数类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E5%8F%8A%E6%93%8D%E4%BD%9C"><span class="nav-number">1.8.</span> <span class="nav-text">容器及操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%81%E8%A3%85%E3%80%81%E7%BB%A7%E6%89%BF%E5%92%8C%E5%A4%9A%E6%80%81"><span class="nav-number">1.9.</span> <span class="nav-text">封装、继承和多态</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%81%E8%A3%85"><span class="nav-number">1.9.1.</span> <span class="nav-text">封装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%A7%E6%89%BF"><span class="nav-number">1.9.2.</span> <span class="nav-text">继承</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A4%9A%E6%80%81"><span class="nav-number">1.9.3.</span> <span class="nav-text">多态</span></a></li></ol></li></ol></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Wu Qiushi</p>
+  <div class="site-description" itemprop="description">欢迎来到我的频道</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://jiojio-415.github.io/2020/12/21/python%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Wu Qiushi">
+      <meta itemprop="description" content="欢迎来到我的频道">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="jiojio-415">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          python学习笔记2
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2020-12-21 14:22:51 / Modified: 14:23:31" itemprop="dateCreated datePublished" datetime="2020-12-21T14:22:51+08:00">2020-12-21</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="Python学习2"><a href="#Python学习2" class="headerlink" title="Python学习2"></a>Python学习2</h1><h2 id="动态类型"><a href="#动态类型" class="headerlink" title="动态类型"></a>动态类型</h2><p>python是强类型的动态类型语言</p>
+<p>动态类型核心：<strong>引用和对象分离</strong></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/vamei/archive/2012/07/10/2582795.html">参考链接1</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/abc_12366/article/details/79733685">参考链接2</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/yutb/p/10843436.html">参考链接3</a></p>
+<p><strong><em>Python是动态类型，即在编程中允许随意改变变量的类型，我们把这个过程称为『绑定（Binding）』\</em></strong></p>
+<p><strong><em>『绑定』只存在于动态类型语言中；对于静态语言如C，存在『强制类型转换』\</em></strong></p>
+<h2 id="深拷贝和浅拷贝"><a href="#深拷贝和浅拷贝" class="headerlink" title="深拷贝和浅拷贝"></a>深拷贝和浅拷贝</h2><ul>
+<li>深拷贝指的是复制内容，单独开辟一个内存地址。</li>
+<li>浅拷贝指的是两个变量同时指向一个内存地址。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> copy</span><br><span class="line">a0=[[<span class="number">1</span>,<span class="number">2</span>],[<span class="number">3</span>,<span class="number">4</span>],[<span class="number">5</span>,<span class="number">6</span>]]</span><br><span class="line">a1=a0</span><br><span class="line">a2=copy.copy(a0)</span><br><span class="line">a3=copy.deepcopy(a0)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">print_a</span>():</span></span><br><span class="line">    print(<span class="string">&quot;a0&quot;</span>,a0,<span class="string">&quot;     id(a0)&quot;</span>,<span class="built_in">id</span>(a0))</span><br><span class="line">    print(<span class="string">&quot;a1&quot;</span>,a1,<span class="string">&quot;     id(a1)&quot;</span>,<span class="built_in">id</span>(a1))</span><br><span class="line">    print(<span class="string">&quot;a2&quot;</span>,a2,<span class="string">&quot;     id(a2)&quot;</span>,<span class="built_in">id</span>(a2))</span><br><span class="line">    print(<span class="string">&quot;a3&quot;</span>,a3,<span class="string">&quot;     id(a3)&quot;</span>,<span class="built_in">id</span>(a3))</span><br><span class="line">    print()</span><br><span class="line">    </span><br><span class="line">print(<span class="string">&quot;Before the test....&quot;</span>)</span><br><span class="line">print_a()</span><br><span class="line"></span><br><span class="line">print(<span class="string">&quot;Before the 1st test....&quot;</span>)</span><br><span class="line">a1[<span class="number">0</span>][<span class="number">0</span>]=<span class="number">100</span></span><br><span class="line">print_a()</span><br><span class="line">print(<span class="string">&quot;Before the 2nd test....&quot;</span>)</span><br><span class="line">a2[<span class="number">1</span>][<span class="number">0</span>]=<span class="number">200</span></span><br><span class="line">print_a()</span><br><span class="line">print(<span class="string">&quot;Before the 3rd test....&quot;</span>)</span><br><span class="line">a3[<span class="number">2</span>][<span class="number">0</span>]=<span class="number">300</span></span><br><span class="line">print_a()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">Before the test....</span><br><span class="line">a0 [[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>], [<span class="number">5</span>, <span class="number">6</span>]]      <span class="built_in">id</span>(a0) <span class="number">2206184978248</span></span><br><span class="line">a1 [[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>], [<span class="number">5</span>, <span class="number">6</span>]]      <span class="built_in">id</span>(a1) <span class="number">2206184978248</span></span><br><span class="line">a2 [[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>], [<span class="number">5</span>, <span class="number">6</span>]]      <span class="built_in">id</span>(a2) <span class="number">2206185003976</span></span><br><span class="line">a3 [[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>], [<span class="number">5</span>, <span class="number">6</span>]]      <span class="built_in">id</span>(a3) <span class="number">2206183667080</span></span><br><span class="line"></span><br><span class="line">Before the 1st test....</span><br><span class="line">a0 [[<span class="number">100</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>], [<span class="number">5</span>, <span class="number">6</span>]]      <span class="built_in">id</span>(a0) <span class="number">2206184978248</span></span><br><span class="line">a1 [[<span class="number">100</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>], [<span class="number">5</span>, <span class="number">6</span>]]      <span class="built_in">id</span>(a1) <span class="number">2206184978248</span></span><br><span class="line">a2 [[<span class="number">100</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>], [<span class="number">5</span>, <span class="number">6</span>]]      <span class="built_in">id</span>(a2) <span class="number">2206185003976</span></span><br><span class="line">a3 [[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>], [<span class="number">5</span>, <span class="number">6</span>]]      <span class="built_in">id</span>(a3) <span class="number">2206183667080</span></span><br><span class="line"></span><br><span class="line">Before the 2nd test....</span><br><span class="line">a0 [[<span class="number">100</span>, <span class="number">2</span>], [<span class="number">200</span>, <span class="number">4</span>], [<span class="number">5</span>, <span class="number">6</span>]]      <span class="built_in">id</span>(a0) <span class="number">2206184978248</span></span><br><span class="line">a1 [[<span class="number">100</span>, <span class="number">2</span>], [<span class="number">200</span>, <span class="number">4</span>], [<span class="number">5</span>, <span class="number">6</span>]]      <span class="built_in">id</span>(a1) <span class="number">2206184978248</span></span><br><span class="line">a2 [[<span class="number">100</span>, <span class="number">2</span>], [<span class="number">200</span>, <span class="number">4</span>], [<span class="number">5</span>, <span class="number">6</span>]]      <span class="built_in">id</span>(a2) <span class="number">2206185003976</span></span><br><span class="line">a3 [[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>], [<span class="number">5</span>, <span class="number">6</span>]]      <span class="built_in">id</span>(a3) <span class="number">2206183667080</span></span><br><span class="line"></span><br><span class="line">Before the 3rd test....</span><br><span class="line">a0 [[<span class="number">100</span>, <span class="number">2</span>], [<span class="number">200</span>, <span class="number">4</span>], [<span class="number">5</span>, <span class="number">6</span>]]      <span class="built_in">id</span>(a0) <span class="number">2206184978248</span></span><br><span class="line">a1 [[<span class="number">100</span>, <span class="number">2</span>], [<span class="number">200</span>, <span class="number">4</span>], [<span class="number">5</span>, <span class="number">6</span>]]      <span class="built_in">id</span>(a1) <span class="number">2206184978248</span></span><br><span class="line">a2 [[<span class="number">100</span>, <span class="number">2</span>], [<span class="number">200</span>, <span class="number">4</span>], [<span class="number">5</span>, <span class="number">6</span>]]      <span class="built_in">id</span>(a2) <span class="number">2206185003976</span></span><br><span class="line">a3 [[<span class="number">1</span>, <span class="number">2</span>], [<span class="number">3</span>, <span class="number">4</span>], [<span class="number">300</span>, <span class="number">6</span>]]      <span class="built_in">id</span>(a3) <span class="number">2206183667080</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="传引用"><a href="#传引用" class="headerlink" title="传引用"></a>传引用</h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/loleina/p/5276918.html">参考链接</a></p>
+<p>值传递（passl-by-value）过程中，被调函数的形式参数作为被调函数的局部变量处理，即在堆栈中开辟了内存空间以存放由主调函数放进来的实参的值，从而成为了实参的一个副本。值传递的特点是被调函数对形式参数的任何操作都是作为局部变量进行，不会影响主调函数的实参变量的值。</p>
+<p>引用传递(pass-by-reference)过程中，被调函数的形式参数虽然也作为局部变量在堆栈中开辟了内存空间，但是这时存放的是由主调函数放进来的实参变量的地址。被调函数对形参的任何操作都被处理成间接寻址，即通过堆栈中存放的地址访问主调函数中的实参变量。正因为如此，被调函数对形参做的任何操作都影响了主调函数中的实参变量。</p>
+<h2 id="类的封装"><a href="#类的封装" class="headerlink" title="类的封装"></a>类的封装</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/max_like/article/details/81346484">参考链接</a></p>
+<h2 id="日期和时间"><a href="#日期和时间" class="headerlink" title="日期和时间"></a>日期和时间</h2><p><a target="_blank" rel="noopener" href="https://www.runoob.com/python3/python3-date-time.html">参考教程链接</a></p>
+<p>Python 提供了一个 time 和 calendar 模块可以用于格式化日期和时间。时间间隔是以秒为单位的浮点小数。</p>
+<p>每个时间戳都以自从 1970 年 1 月 1 日午夜（历元）经过了多长时间来表示。</p>
+<p>获取当前时间戳</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line">ticks=time.time()</span><br><span class="line">print(<span class="string">&quot;当前时间戳为：&quot;</span>,ticks)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">当前时间戳为： <span class="number">1608103362.5277846</span></span><br></pre></td></tr></table></figure>
+
+<p>时间戳单位最适于做日期运算。但是<strong>1970年之前的日期就无法以此表示了</strong>。太遥远的日期也不行，<strong>UNIX和Windows只支持到2038年</strong>。</p>
+<p>很多Python函数用一个元组装起来的9组数字处理时间:</p>
+<table>
+<thead>
+<tr>
+<th align="left">序号</th>
+<th align="left">字段</th>
+<th align="left">值</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">0</td>
+<td align="left">4位数年</td>
+<td align="left">2008</td>
+</tr>
+<tr>
+<td align="left">1</td>
+<td align="left">月</td>
+<td align="left">1 到 12</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left">日</td>
+<td align="left">1到31</td>
+</tr>
+<tr>
+<td align="left">3</td>
+<td align="left">小时</td>
+<td align="left">0到23</td>
+</tr>
+<tr>
+<td align="left">4</td>
+<td align="left">分钟</td>
+<td align="left">0到59</td>
+</tr>
+<tr>
+<td align="left">5</td>
+<td align="left">秒</td>
+<td align="left">0到61 (60或61 是闰秒)</td>
+</tr>
+<tr>
+<td align="left">6</td>
+<td align="left">一周的第几日</td>
+<td align="left">0到6 (0是周一)</td>
+</tr>
+<tr>
+<td align="left">7</td>
+<td align="left">一年的第几日</td>
+<td align="left">1到366 (儒略历)</td>
+</tr>
+<tr>
+<td align="left">8</td>
+<td align="left">夏令时</td>
+<td align="left">-1, 0, 1, -1是决定是否为夏令时的旗帜</td>
+</tr>
+</tbody></table>
+<p>python中时间日期格式化符号：</p>
+<ul>
+<li>%y 两位数的年份表示（00-99）</li>
+<li>%Y 四位数的年份表示（000-9999）</li>
+<li>%m 月份（01-12）</li>
+<li>%d 月内中的一天（0-31）</li>
+<li>%H 24小时制小时数（0-23）</li>
+<li>%I 12小时制小时数（01-12）</li>
+<li>%M 分钟数（00=59）</li>
+<li>%S 秒（00-59）</li>
+<li>%a 本地简化星期名称</li>
+<li>%A 本地完整星期名称</li>
+<li>%b 本地简化的月份名称</li>
+<li>%B 本地完整的月份名称</li>
+<li>%c 本地相应的日期表示和时间表示</li>
+<li>%j 年内的一天（001-366）</li>
+<li>%p 本地A.M.或P.M.的等价符</li>
+<li>%U 一年中的星期数（00-53）星期天为星期的开始</li>
+<li>%w 星期（0-6），星期天为星期的开始</li>
+<li>%W 一年中的星期数（00-53）星期一为星期的开始</li>
+<li>%x 本地相应的日期表示</li>
+<li>%X 本地相应的时间表示</li>
+<li>%Z 当前时区的名称</li>
+<li>%% %号本身</li>
+</ul>
+<p>输出日历</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> calendar</span><br><span class="line"></span><br><span class="line">cal = calendar.month(<span class="number">2016</span>, <span class="number">1</span>)</span><br><span class="line"><span class="built_in">print</span> (<span class="string">&quot;以下输出2016年1月份的日历:&quot;</span>)</span><br><span class="line"><span class="built_in">print</span> (cal)</span><br></pre></td></tr></table></figure>
+
+<h2 id="字符串"><a href="#字符串" class="headerlink" title="字符串"></a>字符串</h2><p><a target="_blank" rel="noopener" href="https://www.runoob.com/python3/python3-string.html">参考教程链接</a></p>
+<ul>
+<li>字符串运算符</li>
+<li>字符串格式化</li>
+</ul>
+<p>python字符串格式化符号:</p>
+<table>
+<thead>
+<tr>
+<th align="left">符  号</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">%c</td>
+<td align="left">格式化字符及其ASCII码</td>
+</tr>
+<tr>
+<td align="left">%s</td>
+<td align="left">格式化字符串</td>
+</tr>
+<tr>
+<td align="left">%d</td>
+<td align="left">格式化整数</td>
+</tr>
+<tr>
+<td align="left">%u</td>
+<td align="left">格式化无符号整型</td>
+</tr>
+<tr>
+<td align="left">%o</td>
+<td align="left">格式化无符号八进制数</td>
+</tr>
+<tr>
+<td align="left">%x</td>
+<td align="left">格式化无符号十六进制数</td>
+</tr>
+<tr>
+<td align="left">%X</td>
+<td align="left">格式化无符号十六进制数（大写）</td>
+</tr>
+<tr>
+<td align="left">%f</td>
+<td align="left">格式化浮点数字，可指定小数点后的精度</td>
+</tr>
+<tr>
+<td align="left">%e</td>
+<td align="left">用科学计数法格式化浮点数</td>
+</tr>
+<tr>
+<td align="left">%E</td>
+<td align="left">作用同%e，用科学计数法格式化浮点数</td>
+</tr>
+<tr>
+<td align="left">%g</td>
+<td align="left">%f和%e的简写</td>
+</tr>
+<tr>
+<td align="left">%G</td>
+<td align="left">%f 和 %E 的简写</td>
+</tr>
+<tr>
+<td align="left">%p</td>
+<td align="left">用十六进制数格式化变量的地址</td>
+</tr>
+</tbody></table>
+<h3 id="f-string"><a href="#f-string" class="headerlink" title="f-string"></a>f-string</h3><p>f-string 格式化字符串以 f 开头，后面跟着字符串，字符串中的表达式用大括号 {} 包起来，它会将变量或表达式计算后的值替换进去</p>
+<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><p><a target="_blank" rel="noopener" href="https://www.runoob.com/python3/python3-function.html">参考链接</a></p>
+<h3 id="参数传递"><a href="#参数传递" class="headerlink" title="参数传递"></a>参数传递</h3><p><strong>可更改(mutable)与不可更改(immutable)对象</strong></p>
+<p>在 python 中，strings, tuples, 和 numbers 是不可更改的对象，而 list,dict 等则是可以修改的对象。</p>
+<ul>
+<li><strong>不可变类型：</strong>变量赋值 <strong>a=5</strong> 后再赋值 <strong>a=10</strong>，这里实际是新生成一个 int 值对象 10，再让 a 指向它，而 5 被丢弃，不是改变 a 的值，相当于新生成了 a。</li>
+<li><strong>可变类型：</strong>变量赋值 <strong>la=[1,2,3,4]</strong> 后再赋值 <strong>la[2]=5</strong> 则是将 list la 的第三个元素值更改，本身la没有动，只是其内部的一部分值被修改了。</li>
+</ul>
+<p>python 函数的参数传递：</p>
+<ul>
+<li><strong>不可变类型：</strong>类似 C++ 的值传递，如 整数、字符串、元组。如 fun(a)，传递的只是 a 的值，没有影响 a 对象本身。如果在 fun(a)）内部修改 a 的值，则是新生成来一个 a。</li>
+<li><strong>可变类型：</strong>类似 C++ 的引用传递，如 列表，字典。如 fun(la)，则是将 la 真正的传过去，修改后 fun 外部的 la 也会受影响</li>
+</ul>
+<p>python 中一切都是对象，严格意义我们不能说值传递还是引用传递，我们应该说传不可变对象和传可变对象</p>
+<h3 id="参数类型"><a href="#参数类型" class="headerlink" title="参数类型"></a>参数类型</h3><p>以下是调用函数时可使用的正式参数类型：</p>
+<ul>
+<li>必需参数</li>
+<li>关键字参数</li>
+<li>默认参数</li>
+<li>不定长参数</li>
+</ul>
+<h2 id="容器及操作"><a href="#容器及操作" class="headerlink" title="容器及操作"></a>容器及操作</h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/lzping/p/12441891.html">参考链接1</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/41188891">参考链接2</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.runoob.com/python3/python3-list.html">参考教程</a></p>
+<h2 id="封装、继承和多态"><a href="#封装、继承和多态" class="headerlink" title="封装、继承和多态"></a>封装、继承和多态</h2><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/ostrich-sunshine/p/9415698.html">参考链接1</a></p>
+<p><a href></a></p>
+<h3 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h3><p>封装是指将数据与具体操作的实现代码放在某个对象内部，使这些代码的实现细节不被外界发现，外界只能通过接口使用该对象，而不能通过任何形式修改对象内部实现，正是由于封装机制，程序在使用某一对象时不需要关心该对象的数据结构细节及实现操作的方法。</p>
+<ul>
+<li>使用封装能隐藏对象实现细节，使代码更易维护，</li>
+<li>同时因为不能直接调用、修改对象内部的私有信息，在一定程度上保证了系统安全性。</li>
+<li>类通过将函数和变量封装在内部，实现了比函数更高一级的封装。</li>
+</ul>
+<h3 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h3><p>继承来源于现实世界，一个最简单的例子就是孩子会具有父母的一些特征，即每个孩子都会继承父亲或者母亲的某些特征，当然这只是最基本的继承关系，现实世界中还存在着更复杂的继承。继承机制实现了代码的复用，多个类公用的代码部分可以只在一个类中提供，而其他类只需要继承这个类即可。</p>
+<p>在 OOP 程序设计中，当我们定义一个新类的时候，新的类称为子类（Subclass），而被继承的类称为基类、父类或超类（Base class、Super class）。继承最大的好处是子类获得了父类的全部变量和方法的同时，又可以根据需要进行修改、拓展。</p>
+<p>Python 支持<strong>多父类</strong>的继承机制，所以需要注意圆括号中基类的顺序，若是基类中有相同的方法名，并且在子类使用时未指定，Python 会从左至右搜索基类中是否包含该方法。一旦查找到则直接调用，后面不再继续查找。</p>
+<ul>
+<li>子类在调用某个方法或变量的时候，首先在自己内部查找，如果没有找到，则开始根据继承机制在父类里查找。</li>
+<li>根据父类定义中的顺序，以<strong>深度优先</strong>的方式逐一查找父类！</li>
+</ul>
+<p>继承参数的书写有先后顺序，写在前面的被优先继承。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">D</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">show</span>(<span class="params">self</span>):</span></span><br><span class="line">        print(<span class="string">&quot;i am D&quot;</span>)</span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span>(<span class="params">D</span>):</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span>(<span class="params">C</span>):</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">G</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">F</span>(<span class="params">G</span>):</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">E</span>(<span class="params">F</span>):</span> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">show</span>(<span class="params">self</span>):</span></span><br><span class="line">        print(<span class="string">&quot;i am E&quot;</span>)</span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>(<span class="params">B, E</span>):</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">a = A()</span><br><span class="line">a.show()</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">i am D</span><br></pre></td></tr></table></figure>
+
+<p>左边具有深度优先权，当一条路走到黑也没找到的时候，才换另一条路。</p>
+<p><strong>super()函数</strong></p>
+<p>我们都知道，在子类中如果有与父类同名的成员，那就会覆盖掉父类里的成员。那如果你想强制调用父类的成员呢？使用super()函数！这是一个非常重要的函数，最常见的就是通过super调用父类的实例化方法 <strong>init</strong> ！</p>
+<p>语法： super(子类名, self).方法名() ，需要传入的是 子类名 和 self，调用的是父类里的方法，按父类的方法需要传入参数。</p>
+<h3 id="多态"><a href="#多态" class="headerlink" title="多态"></a>多态</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Animal</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">kind</span>(<span class="params">self</span>):</span></span><br><span class="line">        print(<span class="string">&quot;i am animal&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dog</span>(<span class="params">Animal</span>):</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">kind</span>(<span class="params">self</span>):</span></span><br><span class="line">        print(<span class="string">&quot;i am a dog&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Cat</span>(<span class="params">Animal</span>):</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">kind</span>(<span class="params">self</span>):</span></span><br><span class="line">        print(<span class="string">&quot;i am a cat&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Pig</span>(<span class="params">Animal</span>):</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">kind</span>(<span class="params">self</span>):</span></span><br><span class="line">        print(<span class="string">&quot;i am a pig&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 这个函数接收一个animal参数，并调用它的kind方法</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">show_kind</span>(<span class="params">animal</span>):</span></span><br><span class="line">    animal.kind()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">d = Dog()</span><br><span class="line">c = Cat()</span><br><span class="line">p = Pig()</span><br><span class="line"></span><br><span class="line">show_kind(d)</span><br><span class="line">show_kind(c)</span><br><span class="line">show_kind(p)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">i am a dog</span><br><span class="line">i am a cat</span><br><span class="line">i am a pig</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/python/" rel="tag"># python</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/12/21/git%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="prev" title="git学习笔记">
+                  <i class="fa fa-chevron-left"></i> git学习笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/12/21/%E5%85%B3%E4%BA%8E%E5%8F%98%E9%87%8F%E7%9A%84%E4%B8%80%E4%BA%9B%E7%90%86%E8%A7%A3/" rel="next" title="关于变量的一些理解">
+                  关于变量的一些理解 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Wu Qiushi</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+</body>
+</html>
